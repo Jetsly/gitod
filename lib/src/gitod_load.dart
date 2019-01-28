@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/oauth.dart';
-import 'package:gitod/src/models/token.dart';
 import 'package:gitod/src/pages/oauth_screen.dart';
 import 'package:gitod/src/pages/home_screen.dart';
 
@@ -15,22 +14,18 @@ class GitodLoad extends StatefulWidget {
 
 class _GitodLoadState extends State<GitodLoad> {
   String accssToken = '';
+  bool initialToken = true;
 
-  @override
-  initState() {
-    super.initState();
-    loadAccessToken();
-  }
-
-  loadAccessToken() async {
-    String token = await Token.getLocalAccessToken();
+  _loadAccessToken() async {
+    initialToken = false;
+    String token = await Oauth.getLocalAccessToken();
     if (token == null) {
-      token = await Navigator.of(context).push(MaterialPageRoute<String>(
+      String code = await Navigator.of(context).push(MaterialPageRoute<String>(
           builder: (context) => OauthScreen(
-              title: widget.title,
               clientId: Oauth.clientId,
-              clientSecret: Oauth.clientSecret,
-              redirectUrl: Oauth.redirectUrl)));
+              redirectUrl: Oauth.redirectUrl,
+              authorizeUrl: Oauth.authorizeUrl)));
+      token = await Oauth.getRomoteAccessToken(code);
     }
     setState(() {
       accssToken = token;
@@ -40,13 +35,15 @@ class _GitodLoadState extends State<GitodLoad> {
   @override
   Widget build(BuildContext context) {
     if (accssToken == '') {
+      if (initialToken) {
+        _loadAccessToken();
+      }
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
         body: Text(
-          'Loading',
-          textAlign: TextAlign.center,
+          'Loading Auth',
         ),
       );
     } else {

@@ -5,6 +5,7 @@ String readViewRepo = """
 query {
   viewer {
     repositories(first: 10, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      totalCount
       edges {
         cursor
         node {
@@ -25,14 +26,8 @@ query {
               color
               name
             }
-            stargazers(first: 100) {
-              edges {
-                node {
-                  ... on User {
-                    name
-                  }
-                }
-              }
+            stargazers(first: 0) {
+              totalCount
             }
           }
         }

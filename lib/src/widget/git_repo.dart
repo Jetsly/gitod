@@ -40,15 +40,17 @@ class _RepoWidgetState extends State<RepoWidget> {
             Repository node = repositories.edges[index].node;
             final subtitle = <Widget>[
               Row(children: <Widget>[
-                Icon(Icons.star, size: 18, color: Colors.black),
+                Icon(Icons.star, size: 18, color: HexColor("#586069")),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                    child: Text(node.stargazers.edges.length.toString())),
+                    padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
+                    child: Text(node.stargazers.count,
+                        style: TextStyle(color: HexColor("#586069")))),
                 Icon(Icons.lens,
                     size: 15, color: HexColor(node.primaryLanguage.color)),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                    child: Text(node.primaryLanguage.name)),
+                    padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
+                    child: Text(node.primaryLanguage.name,
+                        style: TextStyle(color: HexColor("#586069")))),
               ])
             ];
             if (node.description.length > 0) {

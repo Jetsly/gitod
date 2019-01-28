@@ -48,25 +48,40 @@ class StargazerEdge extends Edge<User> {
 
 class Connection<T> {
   PageInfo pageInfo;
+  num totalCount;
   List<T> edges;
+  String get count {
+    if (this.totalCount > 1000) {
+      return  (this.totalCount / 1000).toStringAsFixed(1) + "k";
+    }
+    return this.totalCount.toString();
+  }
+
   Connection.fromJson(Map json) {
     pageInfo = PageInfo.fromJson(json['pageInfo']);
+    totalCount = json['totalCount'];
     edges = new List();
   }
 }
 
 class RepositoryConnection extends Connection<RepositoryEdge> {
   RepositoryConnection.fromJson(Map json) : super.fromJson(json) {
-    for (dynamic edge in json['edges']) {
-      edges.add(RepositoryEdge.fromJson(edge));
+    List<dynamic> edgesMap = json['edges'];
+    if (edgesMap != null && edgesMap.isNotEmpty) {
+      for (dynamic edge in edgesMap) {
+        edges.add(RepositoryEdge.fromJson(edge));
+      }
     }
   }
 }
 
 class StargazerConnection extends Connection<StargazerEdge> {
   StargazerConnection.fromJson(Map json) : super.fromJson(json) {
-    for (dynamic edge in json['edges']) {
-      edges.add(StargazerEdge.fromJson(edge));
+    List<dynamic> edgesMap = json['edges'];
+    if (edgesMap != null && edgesMap.isNotEmpty) {
+      for (dynamic edge in edgesMap) {
+        edges.add(StargazerEdge.fromJson(edge));
+      }
     }
   }
 }

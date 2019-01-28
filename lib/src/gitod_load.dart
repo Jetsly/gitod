@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gitod/src/models/oauth.dart';
 import 'package:gitod/src/pages/oauth_screen.dart';
 import 'package:gitod/src/pages/home_screen.dart';
+import 'package:gitod/src/layouts/home_layout.dart';
 
 class GitodLoad extends StatefulWidget {
   GitodLoad({Key key, this.title}) : super(key: key);
@@ -47,7 +48,7 @@ class _GitodLoadState extends State<GitodLoad> {
         ),
       );
     } else {
-      return HomeScreen(accessToken: accssToken, title: widget.title);
+      return HomeLayout(accessToken: accssToken, child: new HomeScreen(title: widget.title));
     }
   }
 }

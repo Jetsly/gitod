@@ -1,55 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:gitod/src/models/repo.dart';
-
-String readRepositories = """
-query {
-  viewer {
-    repositories(first: 10, orderBy: {field: UPDATED_AT, direction: DESC}) {
-      edges {
-        cursor
-        node {
-          ... on Repository {
-            owner {
-              id
-              login
-              avatarUrl
-            }
-            id
-            name
-            nameWithOwner
-            description
-            isPrivate
-            forkCount
-            primaryLanguage {
-              id
-              color
-              name
-            }
-            stargazers(first: 100) {
-              edges {
-                node {
-                  ... on User {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-      }
-    }
-  }
-}
-"""
-    .replaceAll('\n', ' ');
+import 'package:gitod/src/models/utils.dart';
 
 class RepoWidget extends StatefulWidget {
+  final String query;
+  const RepoWidget({@required this.query});
+
   @override
   State<StatefulWidget> createState() => _RepoWidgetState();
 }
@@ -57,7 +14,7 @@ class RepoWidget extends StatefulWidget {
 class _RepoWidgetState extends State<RepoWidget> {
   @override
   Widget build(BuildContext context) {
-    return Query(readRepositories, // this is the query you just created
+    return Query(widget.query, // this is the query you just created
         builder: ({
       bool loading,
       var data,
@@ -71,8 +28,11 @@ class _RepoWidgetState extends State<RepoWidget> {
           'Loading Repo',
         );
       }
-      RepositoryConnection repositories =
-          RepositoryConnection.fromJson(data['viewer']['repositories']);
+      Map viewer = data['viewer'];
+      RepositoryConnection repositories = RepositoryConnection.fromJson(
+          viewer.containsKey('repositories')
+              ? viewer['repositories']
+              : viewer['starredRepositories']);
       final itemCount = repositories.edges.length;
       return ListView.builder(
           itemCount: itemCount,
@@ -80,19 +40,15 @@ class _RepoWidgetState extends State<RepoWidget> {
             Repository node = repositories.edges[index].node;
             final subtitle = <Widget>[
               Row(children: <Widget>[
+                Icon(Icons.star, size: 18, color: Colors.black),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                    child: Icon(Icons.star, size: 18, color: Colors.black)),
-                Text(node.stargazers.edges.length.toString()),
+                    padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                    child: Text(node.stargazers.edges.length.toString())),
+                Icon(Icons.lens,
+                    size: 15, color: HexColor(node.primaryLanguage.color)),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                    child: Icon(Icons.lens,
-                        size: 15, color: HexColor(node.primaryLanguage.color))),
-                Text(node.primaryLanguage.name),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                    child: Icon(Icons.share, size: 15, color: Colors.black)),
-                Text(node.forkCount.toString()),
+                    padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                    child: Text(node.primaryLanguage.name)),
               ])
             ];
             if (node.description.length > 0) {

@@ -16,9 +16,9 @@ class User {
   String id;
   String name;
   String login;
-  String avatarUrl;
   String email;
   String location;
+  String avatarUrl;
   String websiteUrl;
   String bio;
   User.fromJson(Map json) {
@@ -28,6 +28,7 @@ class User {
       name = val(json['name']);
       email = val(json['email']);
       location = val(json['location']);
+      avatarUrl = val(json['avatarUrl']);
       websiteUrl = val(json['websiteUrl']);
       bio = val(json['bio']);
     }

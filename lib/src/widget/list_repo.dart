@@ -37,8 +37,12 @@ class _ListRepoWidgetState extends State<ListRepoWidget> {
               ? viewer['repositories']
               : viewer['starredRepositories']);
       final itemCount = repositories.edges.length;
-      return ListView.builder(
+      return ListView.separated(
           itemCount: itemCount,
+          separatorBuilder: (BuildContext context, int index) => Divider(
+                height: 2.5,
+                color: HexColor("#eaecef"),
+              ),
           itemBuilder: (BuildContext context, int index) {
             Repository node = repositories.edges[index].node;
             final subtitle = <Widget>[
@@ -65,8 +69,9 @@ class _ListRepoWidgetState extends State<ListRepoWidget> {
                       child: Text(node.description,
                           overflow: TextOverflow.ellipsis, maxLines: 3)));
             }
-            final listItem = <Widget>[
-              ListTile(
+            return Container(
+              color: node.isPrivate ? HexColor("#fffdef") : null,
+              child: ListTile(
                 contentPadding: EdgeInsets.all(6),
                 onTap: () {},
                 title: Padding(
@@ -96,16 +101,7 @@ class _ListRepoWidgetState extends State<ListRepoWidget> {
                   ),
                 ),
               ),
-            ];
-            if (index != itemCount - 1) {
-              listItem.add(Divider(
-                height: 2.5,
-                color: HexColor("#eaecef"),
-              ));
-            }
-            return Container(
-                color: node.isPrivate ? HexColor("#fffdef") : null,
-                child: Column(children: listItem));
+            );
           });
     });
   }

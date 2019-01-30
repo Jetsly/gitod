@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:gitod/src/models/types.dart';
 import 'package:gitod/src/models/repo.dart';
 import 'package:gitod/src/models/utils.dart';
-import 'package:gitod/src/widget/query-graphql.dart';
+import 'package:gitod/src/widget/query_graphql.dart';
 
-class FollowWidget extends StatefulWidget {
+class ListFollowWidget extends StatefulWidget {
   final String query;
-  const FollowWidget({@required this.query});
+  const ListFollowWidget({@required this.query});
 
   @override
-  State<StatefulWidget> createState() => _FollowWidgetState();
+  State<StatefulWidget> createState() => _ListFollowWidgetState();
 }
 
-class _FollowWidgetState extends State<FollowWidget> {
+class _ListFollowWidgetState extends State<ListFollowWidget> {
   @override
   Widget build(BuildContext context) {
     return QueryGraphql(

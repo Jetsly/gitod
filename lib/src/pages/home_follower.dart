@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/types.dart';
 import 'package:gitod/src/models/repo.dart';
-import 'package:gitod/src/widget/follow.dart';
+import 'package:gitod/src/widget/list_follow.dart';
 
 String viewFollower = """
 query {
@@ -17,7 +17,7 @@ query {
 class HomeFollower extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FollowWidget(
+    return ListFollowWidget(
       query: viewFollower,
     );
   }

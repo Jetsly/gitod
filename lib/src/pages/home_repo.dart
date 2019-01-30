@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/types.dart';
 import 'package:gitod/src/models/repo.dart';
-import 'package:gitod/src/widget/repo.dart';
+import 'package:gitod/src/widget/list_repo.dart';
 
 String viewRepo = """
 query {
@@ -18,7 +18,7 @@ query {
 class HomeRepo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RepoWidget(
+    return ListRepoWidget(
       query: viewRepo,
     );
   }

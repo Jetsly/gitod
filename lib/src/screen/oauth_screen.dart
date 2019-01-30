@@ -28,7 +28,7 @@ class _OauthScreenState extends State<OauthScreen> {
     final url =
         "$authorizeUrl?scope=$scope&client_id=$clientId&redirect_uri=$redirectUrl";
     if (!setupUrlChangedListener) {
-      flutterWebviewPlugin.onUrlChanged.listen((String changedUrl) async {
+      flutterWebviewPlugin.onUrlChanged.listen((String changedUrl) {
         if (changedUrl.startsWith(widget.redirectUrl)) {
           Uri uri = Uri().resolve(changedUrl);
           String code = uri.queryParameters["code"];
@@ -37,11 +37,13 @@ class _OauthScreenState extends State<OauthScreen> {
       });
       setupUrlChangedListener = true;
     }
-    return WebviewScaffold(
+    return new WebviewScaffold(
       appBar: AppBar(
         title: Text("Log in with Github"),
       ),
       url: url,
+      userAgent:
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
     );
   }
 }

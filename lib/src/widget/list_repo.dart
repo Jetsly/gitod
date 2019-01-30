@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/repo.dart';
 import 'package:gitod/src/models/utils.dart';
-import 'package:gitod/src/widget/query-graphql.dart';
+import 'package:gitod/src/widget/query_graphql.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class RepoWidget extends StatefulWidget {
+class ListRepoWidget extends StatefulWidget {
   final String query;
-  const RepoWidget({@required this.query});
+  const ListRepoWidget({@required this.query});
 
   @override
-  State<StatefulWidget> createState() => _RepoWidgetState();
+  State<StatefulWidget> createState() => _ListRepoWidgetState();
 }
 
-class _RepoWidgetState extends State<RepoWidget> {
+class _ListRepoWidgetState extends State<ListRepoWidget> {
   @override
   Widget build(BuildContext context) {
     return QueryGraphql(

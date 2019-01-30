@@ -49,4 +49,9 @@ class Oauth {
     return SharedPreferences.getInstance()
         .then((shared) => shared.setString(shareToken, accessToken));
   }
+
+  static Future<void> clearAccessToken() async {
+    return SharedPreferences.getInstance()
+        .then((shared) => shared.remove(shareToken));
+  }
 }

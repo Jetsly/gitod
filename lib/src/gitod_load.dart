@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/oauth.dart';
+import 'package:gitod/src/models/event_bus.dart';
 import 'package:gitod/src/screen/oauth_screen.dart';
 import 'package:gitod/src/screen/home_screen.dart';
 import 'package:gitod/src/layouts/home_layout.dart';
@@ -16,6 +17,16 @@ class GitodLoad extends StatefulWidget {
 class _GitodLoadState extends State<GitodLoad> {
   String accssToken = '';
   bool initialToken = true;
+
+  @override
+  initState() {
+    super.initState();
+    EventBus.getInstance().on().listen((event) {
+      Oauth.clearAccessToken().then((value) {
+        this._loadAccessToken();
+      });
+    });
+  }
 
   _loadAccessToken() async {
     initialToken = false;
@@ -48,7 +59,8 @@ class _GitodLoadState extends State<GitodLoad> {
         ),
       );
     } else {
-      return HomeLayout(accessToken: accssToken, child: new HomeScreen(title: widget.title));
+      return HomeLayout(
+          accessToken: accssToken, child: new HomeScreen(title: widget.title));
     }
   }
 }

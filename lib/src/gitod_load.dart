@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/oauth.dart';
-import 'package:gitod/src/pages/oauth_screen.dart';
-import 'package:gitod/src/pages/home_screen.dart';
+import 'package:gitod/src/screen/oauth_screen.dart';
+import 'package:gitod/src/screen/home_screen.dart';
 import 'package:gitod/src/layouts/home_layout.dart';
 
 class GitodLoad extends StatefulWidget {

@@ -19,4 +19,4 @@ samples, guidance on mobile development, and a full API reference.
 ## helps
 
 - [graphql explorer](https://developer.github.com/v4/explorer/)
-- [Icons](https://docs.flutter.io/flutter/material/Icons-class.html)
+- [Icons](https://material.io/tools/icons/)

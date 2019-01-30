@@ -24,8 +24,9 @@ class _OauthScreenState extends State<OauthScreen> {
     final clientId = widget.clientId;
     final redirectUrl = widget.redirectUrl;
     final authorizeUrl = widget.authorizeUrl;
+    final scope = Uri.encodeComponent("notification,gist,user,repo");
     final url =
-        "$authorizeUrl?scope=repo&client_id=$clientId&redirect_uri=$redirectUrl";
+        "$authorizeUrl?scope=$scope&client_id=$clientId&redirect_uri=$redirectUrl";
     if (!setupUrlChangedListener) {
       flutterWebviewPlugin.onUrlChanged.listen((String changedUrl) async {
         if (changedUrl.startsWith(widget.redirectUrl)) {

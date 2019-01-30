@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gitod/src/pages/home/home_repo.dart';
-import 'package:gitod/src/pages/home/home_star.dart';
+import 'package:gitod/src/pages/home_repo.dart';
+import 'package:gitod/src/pages/home_star.dart';
+import 'package:gitod/src/pages/home_follower.dart';
+import 'package:gitod/src/pages/home_following.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -15,6 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _widgetOptions = [
     HomeRepo(),
     HomeStar(),
+    HomeFollower(),
+    HomeFollowing(),
   ];
 
   void _onItemTapped(int index) {
@@ -31,13 +35,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: _widgetOptions.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.storage), title: Text('repo')),
+                icon: Icon(Icons.storage), title: Text('repositories')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.star), title: Text('star')),
+                icon: Icon(Icons.star), title: Text('stars')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.recent_actors), title: Text('follower')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.people), title: Text('following')),
           ],
         ));
   }

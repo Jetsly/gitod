@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:gitod/src/models/repo.dart';
 import 'package:gitod/src/models/utils.dart';
+import 'package:gitod/src/widget/query-graphql.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RepoWidget extends StatefulWidget {
   final String query;
@@ -14,7 +15,9 @@ class RepoWidget extends StatefulWidget {
 class _RepoWidgetState extends State<RepoWidget> {
   @override
   Widget build(BuildContext context) {
-    return Query(widget.query, // this is the query you just created
+    return QueryGraphql(
+        widget.query
+            .replaceAll('\n', ' '), // this is the query you just created
         builder: ({
       bool loading,
       var data,
@@ -57,7 +60,7 @@ class _RepoWidgetState extends State<RepoWidget> {
               subtitle.insert(
                   0,
                   Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                      padding: EdgeInsets.fromLTRB(2, 0, 0, 8),
                       alignment: Alignment.centerLeft,
                       child: Text(node.description,
                           overflow: TextOverflow.ellipsis, maxLines: 3)));
@@ -67,15 +70,17 @@ class _RepoWidgetState extends State<RepoWidget> {
                 contentPadding: EdgeInsets.all(6),
                 onTap: () {},
                 title: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                  padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                   child: Row(
                     children: <Widget>[
-                      Icon(
-                          node.isPrivate ? Icons.lock_outline : Icons.lock_open,
-                          size: 18,
-                          color: Colors.lightBlue),
+                      SvgPicture.asset(
+                          node.isPrivate
+                              ? "assets/repo-lock.svg"
+                              : "assets/repo.svg",
+                          width: 13,
+                          color: HexColor("#586069")),
                       Padding(
-                          padding: EdgeInsets.only(left: 5),
+                          padding: EdgeInsets.only(left: 10),
                           child: Text(node.nameWithOwner,
                               style: TextStyle(
                                 fontSize: 15.0,
@@ -85,7 +90,7 @@ class _RepoWidgetState extends State<RepoWidget> {
                   ),
                 ),
                 subtitle: Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: EdgeInsets.only(left: 30),
                   child: Column(
                     children: subtitle,
                   ),

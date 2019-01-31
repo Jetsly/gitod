@@ -25,6 +25,7 @@ class _GitodLoadState extends State<GitodLoad> {
     ),
   );
   bool initialToken = true;
+  bool cancelAuth = false;
 
   @override
   initState() {
@@ -34,6 +35,7 @@ class _GitodLoadState extends State<GitodLoad> {
         this._loadAccessToken();
       });
     });
+    _loadAccessToken();
   }
 
   _loadAccessToken() async {
@@ -44,18 +46,43 @@ class _GitodLoadState extends State<GitodLoad> {
               clientId: Oauth.clientId,
               redirectUrl: Oauth.redirectUrl,
               authorizeUrl: Oauth.authorizeUrl)));
+      if (code == null) {
+        return setState(() {
+          cancelAuth = true;
+        });
+      }
       token = await Oauth.getRomoteAccessToken(code);
     }
     client.value.apiToken = token;
     setState(() {
+      cancelAuth = false;
       initialToken = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (initialToken) {
-      _loadAccessToken();
+    if (cancelAuth) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
+            child: RaisedButton.icon(
+                color: Theme.of(context).primaryColor,
+                icon: Icon(
+                  Icons.touch_app,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  "Authorize",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  _loadAccessToken();
+                })),
+      );
+    } else if (initialToken) {
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),

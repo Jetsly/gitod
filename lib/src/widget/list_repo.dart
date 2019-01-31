@@ -27,7 +27,8 @@ class ListRepoWidget extends StatelessWidget {
                     child: Text(node.stargazers.count,
                         style: TextStyle(color: HexColor("#586069")))),
               ];
-              if (node.primaryLanguage.id != null) {
+              if (node.primaryLanguage.id != null &&
+                  node.primaryLanguage.color.isNotEmpty) {
                 subRow.insertAll(0, [
                   Icon(Icons.lens,
                       size: 15, color: HexColor(node.primaryLanguage.color)),

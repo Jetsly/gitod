@@ -3,10 +3,11 @@ import 'package:gitod/src/models/types.dart';
 import 'package:gitod/src/models/repo.dart';
 import 'package:gitod/src/widget/list_repo.dart';
 import 'package:gitod/src/widget/query_graphql.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 String viewRepo = """
 query searchRepo(\$nkeyWord: String!) {
-  search(query:\$nkeyWord,first:10,type:REPOSITORY){
+  search(query:\$nkeyWord,first:20,type:REPOSITORY){
     repositoryCount
     userCount
     issueCount
@@ -25,13 +26,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  bool searchIng = true;
   String keyWord = '';
 
   onSubmitted(String value) {
     if (value.trim().isNotEmpty) {
       setState(() {
-        searchIng = false;
         keyWord = value;
       });
     }
@@ -46,8 +45,8 @@ class _SearchScreenState extends State<SearchScreen> {
               textInputAction: TextInputAction.search,
               onSubmitted: onSubmitted),
         ),
-        body: searchIng
-            ? Text('search')
+        body: keyWord.isEmpty
+            ? Center(child: Text('Search Repository'))
             : QueryGraphql(viewRepo.replaceAll('\n', ' '), variables: {
                 'nkeyWord': keyWord,
               }, builder: ({
@@ -59,9 +58,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   return Text(error.toString());
                 }
                 if (loading) {
-                  return Text(
-                    'Loading Repo',
-                  );
+                  return Center(
+                      child: SpinKitCubeGrid(
+                    color: Colors.blue,
+                    size: 50.0,
+                  ));
                 }
                 SearchResultItemConnection repositories =
                     SearchResultItemConnection.fromJson(data['search']);

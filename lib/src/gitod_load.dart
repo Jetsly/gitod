@@ -4,6 +4,7 @@ import 'package:gitod/src/models/event_bus.dart';
 import 'package:gitod/src/screen/oauth_screen.dart';
 import 'package:gitod/src/screen/home_screen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 final InMemoryCache cache = InMemoryCache();
 
@@ -59,9 +60,11 @@ class _GitodLoadState extends State<GitodLoad> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Text(
-          'Loading Auth',
-        ),
+        body: Center(
+            child: SpinKitCubeGrid(
+          color: Colors.blue,
+          size: 50.0,
+        )),
       );
     } else {
       return GraphqlProvider(

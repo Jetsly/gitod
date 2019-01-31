@@ -3,11 +3,12 @@ import 'package:gitod/src/models/types.dart';
 import 'package:gitod/src/models/repo.dart';
 import 'package:gitod/src/widget/list_follow.dart';
 import 'package:gitod/src/widget/query_graphql.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 String viewFollower = """
 {
   viewer {
-    followers(first: 10) {
+    followers(first: 20) {
       ${UserEdge.graph}
       ${PageInfo.graph}
     }
@@ -27,9 +28,11 @@ class HomeFollower extends StatelessWidget {
         return Text(error.toString());
       }
       if (loading) {
-        return Text(
-          'Loading Repo',
-        );
+        return Center(
+            child: SpinKitCubeGrid(
+          color: Colors.blue,
+          size: 50.0,
+        ));
       }
       FollowerConnection follower =
           FollowerConnection.fromJson(data['viewer']['followers']);

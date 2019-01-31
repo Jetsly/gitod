@@ -21,6 +21,7 @@ dependencies:
   flutter_webview_plugin: ^0.3.0+2
   graphql_flutter: ^0.9.5
   flutter_svg: ^0.10.3
+  flutter_spinkit: "^3.1.0"
 
 dev_dependencies:
   flutter_test:

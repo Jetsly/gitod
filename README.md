@@ -24,6 +24,6 @@ samples, guidance on mobile development, and a full API reference.
 
 ## authorize
 
-- [authorize](https://github.com/login/oauth/authorize?scope=notification%2Cgist%2Cuser%2Crepo&client_id=19fb0f456308a43db1b6&redirect_uri=https://github.com/Jetsly/gitod)
+- [authorize](https://github.com/login/oauth/authorize?scope=notification%2Cgist%2Cuser%2Crepo&client_id=19fb0f456308a43db1b6&redirect_uri=https://me.ddot.ink/gitod/)
 
 ## 

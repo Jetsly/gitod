@@ -7,7 +7,7 @@ final String shareToken = 'github_access_token';
 class Oauth {
   static String clientId = "19fb0f456308a43db1b6";
   static String clientSecret = "1e5b9334dae03f4e4a025c219abd71726fc6c127";
-  static String redirectUrl = "https://github.com/Jetsly/gitod";
+  static String redirectUrl = "https://me.ddot.ink/gitod/";
 
   static final String authorizeUrl = 'https://github.com/login/oauth/authorize';
   static final String accessTokenUrl =

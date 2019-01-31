@@ -73,6 +73,7 @@ class _GitodLoadState extends State<GitodLoad> {
             title: 'Gitod',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              primaryColor: Colors.blue,
               primarySwatch: Colors.blue,
             ),
             home: new HomeScreen(title: widget.title),

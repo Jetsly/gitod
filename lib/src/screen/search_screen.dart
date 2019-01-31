@@ -60,7 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 if (loading) {
                   return Center(
                       child: SpinKitCubeGrid(
-                    color: Colors.blue,
+                    color: Theme.of(context).primaryColor,
                     size: 50.0,
                   ));
                 }

@@ -31,7 +31,7 @@ class HomeStar extends StatelessWidget {
       if (loading) {
         return Center(
             child: SpinKitCubeGrid(
-          color: Colors.blue,
+          color: Theme.of(context).primaryColor,
           size: 50.0,
         ));
       }

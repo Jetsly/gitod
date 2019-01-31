@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gitod/src/models/repo.dart';
 import 'package:gitod/src/models/utils.dart';
+import 'package:gitod/src/screen/repo_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ListRepoWidget extends StatelessWidget {
@@ -52,7 +53,10 @@ class ListRepoWidget extends StatelessWidget {
             color: node.isPrivate ? HexColor("#fffdef") : null,
             child: ListTile(
               contentPadding: EdgeInsets.all(6),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute<String>(
+                    builder: (context) => RepoScreen()));
+              },
               title: Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                 child: Row(

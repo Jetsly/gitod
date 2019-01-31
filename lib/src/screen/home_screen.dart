@@ -3,6 +3,7 @@ import 'package:gitod/src/pages/home_repo.dart';
 import 'package:gitod/src/pages/home_star.dart';
 import 'package:gitod/src/pages/home_follower.dart';
 import 'package:gitod/src/pages/home_following.dart';
+import 'package:gitod/src/screen/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -32,6 +33,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute<String>(
+                      builder: (context) => SearchScreen()));
+                },
+                icon: Icon(
+                  Icons.search,
+                ))
+          ],
         ),
         body: _widgetOptions.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(

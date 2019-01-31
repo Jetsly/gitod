@@ -3,7 +3,9 @@ import 'package:gitod/src/models/oauth.dart';
 import 'package:gitod/src/models/event_bus.dart';
 import 'package:gitod/src/screen/oauth_screen.dart';
 import 'package:gitod/src/screen/home_screen.dart';
-import 'package:gitod/src/layouts/home_layout.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+final InMemoryCache cache = InMemoryCache();
 
 class GitodLoad extends StatefulWidget {
   GitodLoad({Key key, this.title}) : super(key: key);
@@ -15,7 +17,12 @@ class GitodLoad extends StatefulWidget {
 }
 
 class _GitodLoadState extends State<GitodLoad> {
-  String accssToken = '';
+  ValueNotifier<Client> client = ValueNotifier(
+    Client(
+      endPoint: Oauth.endPoint,
+      cache: cache,
+    ),
+  );
   bool initialToken = true;
 
   @override
@@ -29,7 +36,6 @@ class _GitodLoadState extends State<GitodLoad> {
   }
 
   _loadAccessToken() async {
-    initialToken = false;
     String token = await Oauth.getLocalAccessToken();
     if (token == null) {
       String code = await Navigator.of(context).push(MaterialPageRoute<String>(
@@ -39,17 +45,16 @@ class _GitodLoadState extends State<GitodLoad> {
               authorizeUrl: Oauth.authorizeUrl)));
       token = await Oauth.getRomoteAccessToken(code);
     }
+    client.value.apiToken = token;
     setState(() {
-      accssToken = token;
+      initialToken = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (accssToken == '') {
-      if (initialToken) {
-        _loadAccessToken();
-      }
+    if (initialToken) {
+      _loadAccessToken();
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
@@ -59,8 +64,16 @@ class _GitodLoadState extends State<GitodLoad> {
         ),
       );
     } else {
-      return HomeLayout(
-          accessToken: accssToken, child: new HomeScreen(title: widget.title));
+      return GraphqlProvider(
+          client: client,
+          child: MaterialApp(
+            title: 'Gitod',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: new HomeScreen(title: widget.title),
+          ));
     }
   }
 }

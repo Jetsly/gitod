@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'package:gitod/src/models/oauth.dart';
 import 'package:gitod/src/models/event_bus.dart';
 import 'package:graphql_flutter/src/client.dart';
 import 'package:graphql_flutter/src/widgets/graphql_provider.dart';

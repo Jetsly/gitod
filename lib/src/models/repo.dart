@@ -76,6 +76,10 @@ class UserEdge extends Edge<User> {
   }
 }
 
+class SearchResultItemEdge extends RepositoryEdge {
+  SearchResultItemEdge.fromJson(Map json) : super.fromJson(json);
+}
+
 class RepositoryConnection extends Connection<RepositoryEdge> {
   formNodeJson(edge) => RepositoryEdge.fromJson(edge);
 
@@ -92,4 +96,20 @@ class FollowerConnection extends Connection<UserEdge> {
   formNodeJson(edge) => UserEdge.fromJson(edge);
 
   FollowerConnection.fromJson(Map json) : super.fromJson(json);
+}
+
+class SearchResultItemConnection extends Connection<SearchResultItemEdge> {
+  num repositoryCount;
+  num userCount;
+  num issueCount;
+  num wikiCount;
+
+  formNodeJson(edge) => SearchResultItemEdge.fromJson(edge);
+
+  SearchResultItemConnection.fromJson(Map json) : super.fromJson(json) {
+    repositoryCount = json['repositoryCount'];
+    userCount = json['userCount'];
+    issueCount = json['issueCount'];
+    wikiCount = json['wikiCount'];
+  }
 }

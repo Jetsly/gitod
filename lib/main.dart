@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gitod/src/gitod_home.dart';
+import 'package:gitod/src/gitod_load.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,12 +8,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Gitod',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      debugShowCheckedModeBanner: false,
-      home: GitodHome(title: 'Gitod'),
+      home: GitodLoad(title: 'Gitod'),
     );
   }
 }
-

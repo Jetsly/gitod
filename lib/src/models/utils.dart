@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
@@ -11,3 +12,8 @@ class HexColor extends Color {
 
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
+
+Function separatorBuilder = (BuildContext context, int index) => Divider(
+      height: 2.5,
+      color: HexColor("#eaecef"),
+    );

@@ -12,10 +12,7 @@ class ListRepoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
         itemCount: repositories.length,
-        separatorBuilder: (BuildContext context, int index) => Divider(
-              height: 2.5,
-              color: HexColor("#eaecef"),
-            ),
+        separatorBuilder: separatorBuilder,
         itemBuilder: (BuildContext context, int index) {
           Repository node = repositories[index].node;
           final subtitle = <Widget>[
@@ -56,7 +53,10 @@ class ListRepoWidget extends StatelessWidget {
               contentPadding: EdgeInsets.all(6),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<String>(
-                    builder: (context) => RepoScreen()));
+                    builder: (context) => RepoScreen(
+                          repoId: node.id,
+                          nameWithOwner: node.nameWithOwner,
+                        )));
               },
               title: Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 0, 8),

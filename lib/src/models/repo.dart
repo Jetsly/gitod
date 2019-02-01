@@ -10,6 +10,8 @@ class Repository {
   Owner owner;
   Language primaryLanguage;
   StargazerConnection stargazers;
+  Ref defaultBranchRef;
+  GitObject object;
 
   Repository.fromJson(Map json) : id = json['id'] {
     name = json['name'];
@@ -17,9 +19,11 @@ class Repository {
     forkCount = json['forkCount'];
     isPrivate = json['isPrivate'];
     description = json['description'] == null ? '' : json['description'];
+    owner = Owner.fromJson(json['owner']);
     primaryLanguage = Language.fromJson(json['primaryLanguage']);
     stargazers = StargazerConnection.fromJson(json['stargazers']);
-    owner = Owner.fromJson(json['owner']);
+    defaultBranchRef = Ref.fromJson(json['defaultBranchRef']);
+    object = GitObject.fromJson(json['object']);
   }
 }
 

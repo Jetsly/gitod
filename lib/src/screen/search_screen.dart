@@ -6,8 +6,8 @@ import 'package:gitod/src/widget/query_graphql.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 String viewRepo = """
-query searchRepo(\$nkeyWord: String!) {
-  search(query:\$nkeyWord,first:20,type:REPOSITORY){
+query searchRepo(\$keyWord: String!) {
+  search(query:\$keyWord,first:20,type:REPOSITORY){
     repositoryCount
     userCount
     issueCount
@@ -48,7 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
         body: keyWord.isEmpty
             ? Center(child: Text('Search Repository'))
             : QueryGraphql(viewRepo.replaceAll('\n', ' '), variables: {
-                'nkeyWord': keyWord,
+                'keyWord': keyWord,
               }, builder: ({
                 bool loading,
                 var data,

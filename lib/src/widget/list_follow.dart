@@ -11,10 +11,7 @@ class ListFollowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
         itemCount: followers.length,
-        separatorBuilder: (BuildContext context, int index) => Divider(
-              height: 2.5,
-              color: HexColor("#eaecef"),
-            ),
+        separatorBuilder: separatorBuilder,
         itemBuilder: (BuildContext context, int index) {
           User node = followers[index].node;
           final subtitle = <Widget>[];
@@ -36,8 +33,7 @@ class ListFollowWidget extends StatelessWidget {
                   ],
                 )));
           }
-          return Container(
-              child: ListTile(
+          return ListTile(
             contentPadding: EdgeInsets.all(10),
             onTap: () {},
             leading: ClipOval(
@@ -68,7 +64,7 @@ class ListFollowWidget extends StatelessWidget {
             subtitle: Column(
               children: subtitle,
             ),
-          ));
+          );
         });
   }
 }

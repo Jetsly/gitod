@@ -50,16 +50,6 @@ class RepoScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _RepoScreenState();
 }
 
-// Container(
-//     color: HexColor("#d0d0d0"),
-//     padding: EdgeInsets.all(7),
-//     height: pathlist.length == 0 ? 30 : 30,
-//     child: Row(children: <Widget>[
-//       Text(
-//         pathlist.join(),
-//         style: TextStyle(color: HexColor("#586069")),
-//       ),
-//     ])),
 class _RepoScreenState extends State<RepoScreen> {
   String resourcePath;
   @override
@@ -76,15 +66,15 @@ class _RepoScreenState extends State<RepoScreen> {
       var data,
       Exception error,
     }) {
-      final Iterable<String> pathlist =
-          resourcePath.split(':').skip(1).where((p) => p.isNotEmpty);
+      final List<String> pathlist =
+          resourcePath.split(':').skip(1).where((p) => p.isNotEmpty).toList();
+      pathlist.insert(0, "${widget.nameWithOwner.split("/").skip(1).join()}/");
       if (loading || error != null) {
         return Scaffold(
             appBar: AppBar(
               title: Text(widget.nameWithOwner),
               centerTitle: true,
             ),
-            // bottomSheet: bottomSheet,
             body: Center(
                 child: error != null
                     ? Text(error.toString())
@@ -94,18 +84,38 @@ class _RepoScreenState extends State<RepoScreen> {
                       )));
       }
       Repository node = Repository.fromJson(data['repository']);
+      if (node.object == null) {
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(widget.nameWithOwner),
+              centerTitle: true,
+            ),
+            body: Center(child: Text("$resourcePath not found entries")));
+      }
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.nameWithOwner),
           centerTitle: true,
         ),
-        // bottomSheet: bottomSheet,
         body: ListView.separated(
             shrinkWrap: true,
-            itemCount: node.object.entries.length,
+            itemCount: node.object.entries.length + 1,
             separatorBuilder: separatorBuilder,
             itemBuilder: (BuildContext context, int index) {
-              final TreeEntry entry = node.object.entries[index];
+              if (index == 0) {
+                return ListTile(
+                    title: Container(
+                        color: HexColor("#d0d0d0"),
+                        padding: EdgeInsets.all(7),
+                        height: pathlist.length == 0 ? 30 : 30,
+                        child: Row(children: <Widget>[
+                          Text(
+                            pathlist.join(),
+                            style: TextStyle(color: HexColor("#586069")),
+                          ),
+                        ])));
+              }
+              final TreeEntry entry = node.object.entries[index - 1];
               return ListTile(
                   onTap: () {
                     if (entry.isFolder) {

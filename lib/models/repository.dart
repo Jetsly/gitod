@@ -1,4 +1,19 @@
-class Repository {
+enum TrendType { daily, weekly, monthly }
+
+
+class TrendUser {
+  String href;
+  String avatar;
+  String username;
+
+  TrendUser.fromJson(Map json) {
+    href = json['href'];
+    avatar = json['avatar'];
+    username = json['username'];
+  }
+}
+
+class TrendRepository {
   String author;
   String name;
   String avatar;
@@ -10,8 +25,11 @@ class Repository {
 
   int stars;
   int forks;
+  int currentPeriodStars;
 
-  Repository.fromJson(Map json) {
+  List<TrendUser> builtBys;
+
+  TrendRepository.fromJson(Map json) {
     author = json['author'];
     name = json['name'];
     avatar = json['avatar'];
@@ -23,5 +41,12 @@ class Repository {
 
     stars = json['stars'];
     forks = json['forks'];
+    currentPeriodStars = json['currentPeriodStars'];
+    List<dynamic> builtBy = json['builtBy'];
+    if (builtBy != null && builtBy.isNotEmpty) {
+      builtBys = builtBy.map((m) => TrendUser.fromJson(m)).toList();
+    } else {
+      builtBys = [];
+    }
   }
 }

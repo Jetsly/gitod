@@ -11,3 +11,7 @@ class HexColor extends Color {
 
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
+
+String formatText(String text) {
+  return text.replaceAll(new RegExp(r"\B(?=(\d{3})+(?!\d))"), ",");
+}

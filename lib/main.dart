@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gitod/screen/language.dart';
+import 'package:gitod/screen/search.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gitod/provider/trend.dart';
@@ -16,14 +18,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: "/home",
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/search': (context) => SearchScreen(),
+        '/language': (context) => LanguageScreen(),
+      },
       title: 'Gitod',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(
-        title: "Gitod",
-      ),
+      home: HomeScreen(),
     );
   }
 }

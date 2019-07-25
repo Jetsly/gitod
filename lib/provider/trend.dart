@@ -9,23 +9,11 @@ const String baseUrl = 'https://github-trending-api.now.sh';
 class TrendModel with ChangeNotifier {
   final http.Client _client = http.Client();
 
-  TrendType type;
-  String lang;
-
   List<Language> languages = [];
-  List<TrendRepository> repositories = [];
-
-  String _storeData({TrendType trendType, String language}) {
-    type = trendType;
-    lang = language;
-    return type == TrendType.daily
-        ? 'daily'
-        : type == TrendType.weekly ? 'weekly' : 'monthly';
-  }
+  Map<TrendType, List<TrendRepository>> repositories = {};
 
   void fetchInit() async {
-    await fetchLanguage();
-    await fetchRepositories();
+    fetchLanguage().then((v) => fetchAllRepositories());
   }
 
   Future<void> fetchLanguage() async {
@@ -34,18 +22,24 @@ class TrendModel with ChangeNotifier {
     languages = responseJson.map((m) => Language.fromJson(m)).toList();
   }
 
-  Future<void> fetchRepositories(
-      {TrendType trendType = TrendType.daily, String language = ''}) async {
+  Future<void> fetchAllRepositories({String language = ''}) async {
+    fetchRepositories(TrendType.daily, language);
+    fetchRepositories(TrendType.monthly, language);
+    fetchRepositories(TrendType.weekly, language);
+  }
+
+  Future<void> fetchRepositories(TrendType trendType, String language) async {
+    var since = trendType == TrendType.daily
+        ? 'daily'
+        : trendType == TrendType.weekly ? 'weekly' : 'monthly';
     if (repositories.isNotEmpty) {
-      repositories = [];
+      repositories[trendType] = null;
       notifyListeners();
     }
-    var since = _storeData(trendType: trendType);
-    print("$baseUrl/repositories?since=$since&language=$language");
-    var response = await _client
-        .get("$baseUrl/repositories?since=$since&language=$language");
+    var url = "$baseUrl/repositories?since=$since&language=$language";
+    var response = await _client.get(url);
     List responseJson = json.decode(response.body);
-    repositories =
+    repositories[trendType] =
         responseJson.map((m) => TrendRepository.fromJson(m)).toList();
     notifyListeners();
   }

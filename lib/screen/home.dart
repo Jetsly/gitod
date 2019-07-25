@@ -7,8 +7,6 @@ import 'package:gitod/pages/me.dart';
 import 'package:gitod/screen/search.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String title;
-  const HomeScreen({@required this.title});
 
   @override
   State<StatefulWidget> createState() => _HomeScreenState();

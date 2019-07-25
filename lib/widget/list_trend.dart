@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gitod/models/repository.dart';
 import 'package:gitod/models/utils.dart';
 
+var color = HexColor("#586069");
+
 class ListTrendWidget extends StatelessWidget {
   final List<TrendRepository> repositories;
   const ListTrendWidget({@required this.repositories});
@@ -18,7 +20,6 @@ class ListTrendWidget extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           TrendRepository node = repositories[index];
           var hasLang = node.languageColor != null && node.language != null;
-          var color = HexColor("#586069");
           return Container(
             color: null,
             child: ListTile(
@@ -75,34 +76,34 @@ class ListTrendWidget extends StatelessWidget {
                       Icon(Icons.star, size: 18, color: color),
                       Padding(
                           padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
-                          child: Text(node.stars.toString(),
+                          child: Text(formatText(node.stars.toString()),
                               style: TextStyle(color: color))),
                       SvgPicture.asset("assets/fork.svg",
                           width: 10, color: color),
                       Padding(
                           padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
-                          child: Text(node.forks.toString(),
+                          child: Text(formatText(node.forks.toString()),
                               style: TextStyle(color: color))),
                     ];
                   }()),
-                  Row(children: () {
-                    return <Widget>[
-                      Padding(
-                          padding: EdgeInsets.fromLTRB(4, 10, 10, 0),
-                          child:
-                              Text("Built by", style: TextStyle(color: color))),
-                      ...node.builtBys.map((user) => Padding(
-                          padding: EdgeInsets.fromLTRB(2, 10, 4, 0),
-                          child: ClipRRect(
-                            borderRadius:
-                                new BorderRadius.all(new Radius.circular(5.0)),
-                            child: Image.network(
-                              user.avatar,
-                              width: 18,
-                            ),
-                          )))
-                    ];
-                  }())
+                  Container(
+                    padding: EdgeInsets.fromLTRB(2, 10, 0, 0),
+                    height: 35,
+                    child: Row(children: () {
+                      return node.builtBys
+                          .map((user) => Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: ClipRRect(
+                                borderRadius: new BorderRadius.all(
+                                    new Radius.circular(5.0)),
+                                child: Image.network(
+                                  user.avatar,
+                                  width: 25,
+                                ),
+                              )))
+                          .toList();
+                    }()),
+                  ),
                 ],
               ),
             ),

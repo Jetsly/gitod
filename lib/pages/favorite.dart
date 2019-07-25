@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text('favorite'));
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Favorite'),
+        ),
+        body: Text('favorite'));
   }
 }

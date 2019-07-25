@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gitod/models/repository.dart';
 import 'package:gitod/models/utils.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 var color = HexColor("#586069");
 
@@ -96,9 +97,10 @@ class ListTrendWidget extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: new BorderRadius.all(
                                     new Radius.circular(5.0)),
-                                child: Image.network(
-                                  user.avatar,
+                                child: FadeInImage.memoryNetwork(
                                   width: 25,
+                                  image: user.avatar,
+                                  placeholder: kTransparentImage,
                                 ),
                               )))
                           .toList();

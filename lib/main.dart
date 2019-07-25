@@ -10,26 +10,17 @@ void main() {
   final trend = TrendModel();
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider.value(value: trend)],
-    child: MyApp(),
+    child: MaterialApp(
+        initialRoute: "/",
+        routes: {
+          '/': (context) => HomeScreen(),
+          '/search': (context) => SearchScreen(),
+          '/language': (context) => LanguageScreen(),
+        },
+        title: 'Gitod',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        )),
   ));
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: "/home",
-      routes: {
-        '/home': (context) => HomeScreen(),
-        '/search': (context) => SearchScreen(),
-        '/language': (context) => LanguageScreen(),
-      },
-      title: 'Gitod',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
-    );
-  }
 }

@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 const String baseUrl = 'https://github-trending-api.now.sh';
 
 class TrendModel with ChangeNotifier {
+  var _init = false;
   final http.Client _client = http.Client();
 
   List<Language> languages = [];
   Map<TrendType, List<TrendRepository>> repositories = {};
 
   void fetchInit() async {
-    fetchLanguage().then((v) => fetchAllRepositories());
+    if (!_init) {
+      _init = true;
+      fetchLanguage().then((v) => fetchAllRepositories());
+    }
   }
 
   Future<void> fetchLanguage() async {

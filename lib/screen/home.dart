@@ -4,8 +4,6 @@ import 'package:gitod/pages/trend.dart';
 import 'package:gitod/pages/favorite.dart';
 import 'package:gitod/pages/me.dart';
 
-import 'package:gitod/screen/search.dart';
-
 class HomeScreen extends StatefulWidget {
 
   @override

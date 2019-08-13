@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-const String baseUrl = 'https://github-trending-api.now.sh';
+const String baseUrl = 'https://api.github.ddot.ink';
 
 class TrendModel with ChangeNotifier {
   var _init = false;

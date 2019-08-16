@@ -21,7 +21,7 @@ class TrendModel with ChangeNotifier {
   }
 
   Future<void> fetchLanguage() async {
-    var response = await _client.get("$baseUrl/languages");
+    var response = await _client.get("$baseUrl/trending/languages");
     List responseJson = json.decode(response.body);
     languages = responseJson.map((m) => Language.fromJson(m)).toList();
   }
@@ -40,7 +40,7 @@ class TrendModel with ChangeNotifier {
       repositories[trendType] = null;
       notifyListeners();
     }
-    var url = "$baseUrl/repositories?since=$since&language=$language";
+    var url = "$baseUrl/trending/repositories?since=$since&language=$language";
     var response = await _client.get(url);
     List responseJson = json.decode(response.body);
     repositories[trendType] =

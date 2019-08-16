@@ -20,7 +20,8 @@ class ListTrendWidget extends StatelessWidget {
             ),
         itemBuilder: (BuildContext context, int index) {
           TrendRepository node = repositories[index];
-          var hasLang = node.languageColor != null && node.language != null;
+          var hasLang =
+              node.languageColor.isNotEmpty && node.language.isNotEmpty;
           return Container(
             color: null,
             child: ListTile(
